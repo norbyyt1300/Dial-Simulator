@@ -1,2 +1,2 @@
 # Dial-Simulator
-Simulate any ship dial!
+Simulate any ship dial
