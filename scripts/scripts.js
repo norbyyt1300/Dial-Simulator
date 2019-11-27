@@ -56,7 +56,7 @@ function myOnloadFunction() {
 // Get the XWS information
 function loadXWSShipStatisticsURLsThenGetFFGDataThenPopulateDropDown() {
     // Get the XWS manifest
-    $.get("https://raw.githubusercontent.com/guidokessels/xwing-data2/master/data/manifest.json", function(data, status){
+    $.get("https://raw.githubusercontent.com/guidokessels/xwing-data2/master/data/manifest.json", function (data, status) {
         var XWSManifestJSONString = data;
         // Split the string into lines
         var XWSManifestJSONLines = XWSManifestJSONString.split("\n");
@@ -65,7 +65,7 @@ function loadXWSShipStatisticsURLsThenGetFFGDataThenPopulateDropDown() {
         for (var i = 0; i < XWSManifestJSONLines.length; i++) {
             // If this line is for ship stats, add it to the array!
             if (XWSManifestJSONLines[i].indexOf("\"data/pilots/") != -1) {
-                var shipStatisticsURL = "https://raw.githubusercontent.com/guidokessels/xwing-data2/master/" + (XWSManifestJSONLines[i].replace("\"","").replace("\"","").replace(",","")).trim();
+                var shipStatisticsURL = "https://raw.githubusercontent.com/guidokessels/xwing-data2/master/" + (XWSManifestJSONLines[i].replace("\"", "").replace("\"", "").replace(",", "")).trim();
                 XWSShipStatisticsURLsArray.push(shipStatisticsURL);
             }
         }
@@ -81,7 +81,7 @@ function loadXWSShipStatisticsURLsThenGetFFGDataThenPopulateDropDown() {
 function populateDropDownWithShipNamesAndDialURLS() {
     //console.log("Dial URLs:", shipDialURLs);
     // Add each ship to a drop-down
-    var shipSelectorDropDownElement = document.getElementById("shipSelectorDropDown"); 
+    var shipSelectorDropDownElement = document.getElementById("shipSelectorDropDown");
     for (var i = 0; i < XWSShipStatisticsURLsArray.length; i++) {
         // Create a new option in the select drop-down
         var newOptionElement = document.createElement("option");
@@ -111,6 +111,8 @@ function loadDialsFromURL() {
         cleansedJSONFromURL = cleansedJSONFromURL.replace(/%27/g, "'");
         cleansedJSONFromURL = cleansedJSONFromURL.replace(/%2F/g, "/");
         cleansedJSONFromURL = cleansedJSONFromURL.replace(/%2D/g, "-");
+        // Fix any ship abbreviations that need to be updated
+        cleansedJSONFromURL = cleansedJSONFromURL.replace(/mg100starfortress/g, "mg100starfortresssf17");
         // Get dials for this saved squad!
         loadDialsFromXWS(cleansedJSONFromURL);
     } else {
@@ -131,7 +133,7 @@ function createDropDownOptionTextFromXWSShipStatisticsURL(XWSShipStatisticsURL) 
         .replace(new RegExp("[-]", "g"), " ")
         .replace("/", " - ");
     // Capitalize first words
-    optionText = optionText.replace(/\w\S*/g, function(txt) {
+    optionText = optionText.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
     return (optionText.split(" - ")[0] + " - " + fixShipNameCapitalization(optionText.split(" - ")[1]));
@@ -155,7 +157,7 @@ function fixShipNameCapitalization(shipName) {
 // Determine which dial was clicked, and add it
 function loadDial() {
     // Get the drop-down element
-    var shipSelectorDropDownElement = document.getElementById("shipSelectorDropDown"); 
+    var shipSelectorDropDownElement = document.getElementById("shipSelectorDropDown");
     // Find which option was selected
     var selectedOptionText_shipName = shipSelectorDropDownElement.options[shipSelectorDropDownElement.selectedIndex].text;
     var selectedOptionValue_shipStatsURL = shipSelectorDropDownElement.options[shipSelectorDropDownElement.selectedIndex].value;
@@ -174,10 +176,9 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
     var newDialLabelElement = document.createElement("div");
     newDialLabelElement.setAttribute('class', "dialLabelClass");
     // Set the label text
-    //newDialLabelElement.innerHTML = "Ship #" + shipCounter + ": " + shipSelectorDropDownElement.options[shipSelectorDropDownElement.selectedIndex].text.split(" - ")[1] + "<div onclick='flipDial(this)' class='flip-dial-button'><b>&#8634;</b></div>";
-    newDialLabelElement.innerHTML = "<div class='dialLabelClassInnerElement'><b>#" + shipCounter + ": </b>" + selectedOptionText_shipName.split(" - ")[1] + "<div onclick='flipDial(this)' class='flip-dial-button'><b>&#8634;</b></div></div>";
+    newDialLabelElement.innerHTML = "<span class='shipNumberClass'>" + shipCounter + "</span>" + selectedOptionText_shipName.split(" - ")[1] + "<div onclick='flipDial(this)' class='flip-dial-button'><b>&#8634;</b></div>";
     // Allow scrolling to this dial when the title is clicked
-    newDialLabelElement.addEventListener("click", function() {
+    newDialLabelElement.addEventListener("click", function () {
         console.log("Label clicked: Position: ", this.getBoundingClientRect().top);
         this.scrollIntoView(true);
     });
@@ -199,7 +200,7 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
     // Make the maneuver selector element draggable:
     if (useTouchDragInsteadOfMouseDrag) {
         // From https://mobiforge.com/design-development/touch-friendly-drag-and-drop
-        maneuverSelectorElement.addEventListener('touchmove', function(event) {
+        maneuverSelectorElement.addEventListener('touchmove', function (event) {
             // Get the touch event
             var touch = event.targetTouches[0];
             var touchOffsetInPx = 25;
@@ -213,15 +214,15 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
         addMouseDraggability(maneuverSelectorElement);
         // Also add inline styling to fit more dials on one page
         newDialWrapperElement.style.cssFloat = "left";
-        newDialWrapperElement.style.marginRight = "10px";                
+        newDialWrapperElement.style.marginRight = "10px";
     }
     // Add the dial
     console.log("Add the ship dial");
     var maneuversWrapperElement = document.createElement("div");
     maneuversWrapperElement.setAttribute('class', ("dialManeuversWrapperClass"));
     // Add this element to the parent
-    newDialWrapperElement.appendChild(maneuversWrapperElement);    
-    $.get(shipStatsURL, function(data, status) {
+    newDialWrapperElement.appendChild(maneuversWrapperElement);
+    $.get(shipStatsURL, function (data, status) {
         var parsedShipJSON = JSON.parse(data);
         var shipStatsJSON = parsedShipJSON.stats;
         console.log("Ship JSON: ", shipStatsJSON);
@@ -233,11 +234,11 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
         maneuversWrapperElement.setAttribute('class', ("dialManeuversWrapperClass " + XWSShipName));
         //var maneuversArray = parsedShipJSON.dial.reverse();
         var maneuversArray = parsedShipJSON.dial;
-        var previousManeuverSpeed = maneuversArray[0].substring(0,1);
+        var previousManeuverSpeed = maneuversArray[0].substring(0, 1);
         for (var i = 0; i < maneuversArray.length; i++) {
             var maneuverString = maneuversArray[i];
-            var maneuverSpeed = maneuverString.substring(0,1);
-            var maneuverDirection = maneuverString.substring(1,2);
+            var maneuverSpeed = maneuverString.substring(0, 1);
+            var maneuverDirection = maneuverString.substring(1, 2);
             var maneuverColor = maneuverString.substring(2);
             console.log("Speed, direction, and color: ", maneuverSpeed + "," + maneuverDirection + "," + maneuverColor);
             var newDialManeuverElement = document.createElement("div");
@@ -256,9 +257,9 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
             radius = '7em', //distance from center
             start = -90, //shift start from 0
             $elements = $(maneuversWrapperElement).children(),
-            numberOfElements = (type === 1) ?  $elements.length : $elements.length - 1, //adj for even distro of elements when not full circle
+            numberOfElements = (type === 1) ? $elements.length : $elements.length - 1, //adj for even distro of elements when not full circle
             slice = 360 * type / numberOfElements;
-        $elements.each(function(i) {
+        $elements.each(function (i) {
             var $self = $(this),
                 rotate = slice * i + start,
                 rotateReverse = rotate * -1;
@@ -279,10 +280,10 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
         // Add the ship stats
         console.log("Add the ship stats");
         var newShipStatsElement = document.createElement("div");
-        newShipStatsElement.innerHTML = createHTMlForShipStatsJSON(shipStatsJSON);   
+        newShipStatsElement.innerHTML = createHTMlForShipStatsJSON(shipStatsJSON);
         newShipStatsElement.setAttribute('class', "shipStatsClass");
         newDialWrapperElement.appendChild(newShipStatsElement);
-    }); 
+    });
 }
 
 function getManeuverDirectionSymbol(maneuverDirectionCharacter) {
@@ -343,7 +344,7 @@ function getManeuverDirectionSymbol(maneuverDirectionCharacter) {
         case "O":
             //stop;
             maneuverDirectionSymbolClass = "xwing-miniatures-font-stop";
-            break;                                                                                                                                                                                   
+            break;
     }
     return maneuverDirectionSymbolClass;
 }
@@ -409,14 +410,15 @@ function loadDialsFromXWS(cleansedJSONFromURL) {
         if (selectedOptionValue_shipStatsURL) {
             var selectedOptionText_shipName = createDropDownOptionTextFromXWSShipStatisticsURL(selectedOptionValue_shipStatsURL);
             // Add a dial given this text and value
-            loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOptionValue_shipStatsURL); 
-        }       
+            loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOptionValue_shipStatsURL);
+        }
     }
     // Actually, at the end, just hide the selector and buttons to add ships or save ships
     console.log("Now hiding selectors...");
     document.getElementById("shipSelectorDropDown").style.display = "none";
     document.getElementById("loadShipsButton").style.display = "none";
     document.getElementById("saveToURLButton").style.display = "none";
+    document.getElementById("projectSourceLink").style.display = "none";
 }
 
 // ------------------------------------------------------------------
@@ -459,21 +461,20 @@ function addMouseDraggability(elmnt) {
 
 // Function that hides a dial selector
 function flipDial(clickedElement) {
-    // Get the ship element
-    var shipElement = clickedElement.parentElement.parentElement.parentElement;
-    // Get the selector
-    var selectorElement = shipElement.getElementsByClassName('maneuverSelectorClass')[0];
-    // Also get the dial image
-    //var dialImageElement = shipElement.getElementsByClassName('dialImageClass')[0];
-    //console.log(selectorElement);
+    // Get the parent element
+    var dialWrapperElement = clickedElement.parentElement.parentElement;
+    // Get the element(s) you'd like to hide
+    var selectorElement = dialWrapperElement.getElementsByClassName('maneuverSelectorClass')[0];
+    var dialManeuversWrapperElement = dialWrapperElement.getElementsByClassName('dialManeuversWrapperClass')[0];
+    // Toggle visibility
     if (selectorElement.style.visibility == "hidden") {
         selectorElement.style.visibility = "visible";
         clickedElement.style.color = "lime";
-        //dialImageElement.style.opacity = "1";
+        dialManeuversWrapperElement.style.opacity = "1";
     } else {
         selectorElement.style.visibility = "hidden";
         clickedElement.style.color = "red";
-        //dialImageElement.style.opacity = "0.1";
+        dialManeuversWrapperElement.style.opacity = "0.4";
     }
 }
 
@@ -487,7 +488,7 @@ function saveSquadToURL() {
     };
     for (var i = 0; i < shipElements.length; i++) {
         var shipType = shipElements[i].className.replace(shipElementClassName, "").trim();
-        squadJSON.pilots.push({"ship": shipType});
+        squadJSON.pilots.push({ "ship": shipType });
     }
     console.log("Squad JSON:", squadJSON);
     // If the URL search doesn't equal the new JSON, update it!
