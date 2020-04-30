@@ -13,14 +13,33 @@
 </head>
 
 <body onload="myOnloadFunction()">
+
+  <ul id="main-top-nav-bar">
+    <button class="nav-button" onclick="filterDials('Rebel Alliance')"><a href="#"><i
+          class="xwing-miniatures-font xwing-miniatures-font-rebel faction-button"></i></a></button>
+    <button class="nav-button" onclick="filterDials('Galactic Empire')"><a href="#"><i
+          class="xwing-miniatures-font xwing-miniatures-font-empire faction-button"></i></a></button>
+    <button class="nav-button" onclick="filterDials('Scum And Villainy')"><a href="#"><i
+          class="xwing-miniatures-font xwing-miniatures-font-scum faction-button"></i></a></button>
+    <button class="nav-button" onclick="filterDials('Resistance')"><a href="#"><i
+          class="xwing-miniatures-font xwing-miniatures-font-rebel-outline faction-button"></i></a></button>
+    <button class="nav-button" onclick="filterDials('First Order')"><a href="#"><i
+          class="xwing-miniatures-font xwing-miniatures-font-firstorder faction-button"></i></a></button>
+    <button class="nav-button" onclick="filterDials('Galactic Republic')"><a href="#"><i
+          class="xwing-miniatures-font xwing-miniatures-font-republic faction-button"></i></a></button>
+    <button class="nav-button" onclick="filterDials('Separatist Alliance')"><a href="#"><i
+          class="xwing-miniatures-font xwing-miniatures-font-separatists faction-button"></i></a></button>
+  </ul>
+
   <div id="mainWrapper">
     <select id="shipSelectorDropDown">
-      <option>Loading...</option>
+      <option>Select a ship dial!</option>
     </select>
     <button id="loadShipsButton" onclick="loadDial()">Add Dial</button>
     <button id="saveToURLButton" class="form-button" onclick="saveSquadToURL()">Save to URL</button>
     <br>
-    <a id='projectSourceLink' target="_blank" href="https://github.com/norbyyt1300/Dial-Simulator">View project source</a>
+    <a id='projectSourceLink' target="_blank" href="https://github.com/norbyyt1300/Dial-Simulator/issues/new">Submit
+      Bug/Feature Request</a>
     <div id="dialsContainer"></div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
