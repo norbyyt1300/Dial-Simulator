@@ -195,13 +195,16 @@ body {
     margin: 0px;
     text-align: left;
     padding: 0px 4px 0px 4px;
-    height: 54px;
+    height: 51px;
 }
 
 .nav-button {
     background-color: transparent;
     border: none;
     margin: 0px;
+    padding: 0px;
+    text-align: center;
+    width: 37px;
 }
 
 .faction-button {
