@@ -1,21 +1,39 @@
+html, body, #dialsContainer {
+    background-color: #202020;
+    text-align: center; 
+    margin: 0px;
+    padding: 0px;
+    overscroll-behavior-y: contain;
+}
+#mainWrapper {
+    width: 100%;
+}
+#main-top-nav-bar {
+    background-color: #101010;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 10px;
+}
+.faction-button {
+    color: #0088cc;
+}
+.issue-button {
+    color: red;
+}
+#shipSelectorDropDown {
+    width: 200px;
+}
 .dialWrapperClass {
     margin-top: 10px;            
-    /* height: 568px; */
-    /* width: 374px; */
     width: 340px;
-    padding: 0px;
-    text-align: center;
-    /*margin-left: 10px;*/
     background-color: #080808;
 }   
 .dialLabelClass{
-    width: 100%;
     text-align: left;
     background-color: #151515;
-    padding:11px 10px 13px 11px;
+    padding: 12px;
     color: white;
-    height: 46px; 
-    font-family: Arial, Helvetica, sans-serif;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;  
@@ -24,25 +42,13 @@
 }
 .shipNumberClass {
     font-weight:bold;
-    margin-left: 5px;
-    margin-right: 25px;
+    margin-right: 20px;
     color: magenta;
-    margin-top: 0px;
-    font-family: 'courier';
-    font-size: 20px;
 }
 .flip-dial-button {
-    margin-left: 10px;
-    color: lime;
     float: right;
-    border: 1px solid gray;
-    border-radius: 4px;
-    text-align: center;
-    width: 30px;
-    background-color: rgb(35,33,34);
-    font-size: 18px;
+    font-size: 9px;
 }
-
 .maneuverSelectorClass {
     width: 40px;
     height: 40px;
@@ -53,114 +59,45 @@
     z-index: 999;
     background-color:rgba(255,255,0,0.1);
 }
-html, body, #dialsContainer {
-    background-color: #202020;
-    text-align: center; 
-    margin: 0px;
-    padding: 0px;
-    overscroll-behavior-y: contain;
-}
-#shipSelectorDropDown, button {
-    height: 30px;
-    margin-top: 10px;
-}
-#shipSelectorDropDown {
-    padding-left:10px;
-    margin-right:5px;
-    color: white;
-    background-color: black;
-    border: 1px solid #303030 !important;
-    border: none !important;
-    width: 340px;
-}
-#loadShipsButton, #saveToURLButton {
-    color: white;
-    background-color: black;
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiB2aWV3Qm94PSIwIDAgMzUyIDE1OCI+CiAgICA8ZGVmcz4KICAgICAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImIiIGN4PSI0OC42OSUiIHI9IjI2Ni44MzMlIiBmeD0iNDguNjklIiBmeT0iNTAlIiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KC4xODY3NiAwIDAgMSAuMzk2IDApIj4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzEwMDQwNCIgc3RvcC1vcGFjaXR5PSIuODAzIi8+CiAgICAgICAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzdCMDQwOCIgc3RvcC1vcGFjaXR5PSIuNDgyIi8+CiAgICAgICAgPC9yYWRpYWxHcmFkaWVudD4KICAgICAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImQiIHgxPSIxMjQuODU4JSIgeDI9Ii0zMy40MzMlIiB5MT0iMzkuNTI4JSIgeTI9IjUwJSI+CiAgICAgICAgICAgIDxzdG9wIG9mZnNldD0iMCUiLz4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSI0MS45MSUiIHN0b3AtY29sb3I9IiNDNzI4MjQiLz4KICAgICAgICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIi8+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgICAgICA8cGF0aCBpZD0iYyIgZD0iTTAgMGgzNTB2MTU2SDB6Ii8+CiAgICA8L2RlZnM+CiAgICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEgMSkiPgogICAgICAgIDx1c2UgZmlsbD0idXJsKCNiKSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOmxpZ2h0ZW4iIHhsaW5rOmhyZWY9IiNjIi8+CiAgICAgICAgPHVzZSBzdHJva2U9InVybCgjZCkiIHN0cm9rZS13aWR0aD0iLjg1OCIgeGxpbms6aHJlZj0iI2MiLz4KICAgIDwvZz4KPC9zdmc+Cg==);
-    border-radius: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: none;
-}
-
-#mainWrapper {
-    /* width: 374px; */
-    text-align: left;
-    width: 100%;
-}
 .shipStatsClass {
-    width: 100%;
-    text-align: center;
     background-color: #151515;
-    padding:8px 12px 8px 12px;
-    color: gray;
-    height: 40px; 
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 11px;
+    margin-top: 5px;
+    padding: 8px 12px 12px 12px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;    
-    margin-top: 5px;
 }
 .shipStatClass {
-    font-size: 20px;
-    font-weight:bold;
     margin-left: 7px;
-    margin-right: 7px;
+    font-weight: bold;
     display: inline-block;
-    width: 37px;
-    height: 30px;
+    width: 38px;
     text-align: right;
     background-position: left top;
     background-size: 23px 23px;
     background-repeat: no-repeat;
 }
-
-.shipDialsClass {
-    color: white;
-    font-size: 20px;
-    font-weight:bold;
-    margin-left: 7px;
-    margin-right: 7px;
-    display: inline-block;
-    width: 340px;
-    text-align: left;
-}
-
-html,
-body {
-    overscroll-behavior-y: contain;
-}
 .maneuverColorR {
-    color: rgb(227, 40, 55);
+    color: rgb(227, 40, 55) !important;
 }
 .maneuverColorW {
     color: white;
 }
 .maneuverColorB {
-    color: rgb(61, 186, 211);
+    color: rgb(61, 186, 211) !important;
 }
-.dialManeuverSpeedClass {
-    color: white;
-    font-weight: bold;
-    font-family: arial;
-    width: 100%;
-    padding-bottom: 3px;
-
-}
-.dialManeuverSymbolClass {
-    width: 100%;
+.dialManeuversWrapperClass {
+    height: 19em;
 }
 .dialManeuverElementWrapperClass {
     border-left: 1px solid gray;
     border-right: 1px solid gray;
     width: 30px;
-    text-align: center;   
-    display: inline-block; 
     position: absolute;
 }
-.dialManeuversWrapperClass {
-    height: 19em;
+.dialManeuverSpeedClass {
+    color: white;
+    font-weight: bold;
 }
 .innerCircleDiv {
 	  width: 50px;
@@ -169,42 +106,16 @@ body {
       -moz-border-radius: 25px;
       border-radius: 25px;
       background: #202020;
-	  border: 1px solid #101010;
-	  transform: translate(140px, 130px);
+	  transform: translate(141px, 135px);
 }
 .outerCircleDiv {
-	  width: 280px;
-      height: 280px;
-      -webkit-border-radius: 150px;
-      -moz-border-radius: 150px;
-      border-radius: 150px;
+	  width: 290px;
+      height: 290px;
+      -webkit-border-radius: 145px;
+      -moz-border-radius: 145px;
+      border-radius: 145px;
       background: transparent;
-	  border: 1px solid #202020;
-	  transform: translate(25px, -40px);
+	  border: 2px solid #202020;
+	  transform: translate(20px, -40px);
 	  z-index: 10;
-}
-#projectSourceLink {
-    color:  #0088cc;
-    font-family: 'courier';
-    font-size: 10px;
-    padding: 5px 5px 5px 13px;
-}
-
-#main-top-nav-bar {
-    background-color: #101010;
-    margin: 0px;
-    text-align: left;
-    padding: 0px 4px 0px 4px;
-    height: 50px;
-}
-
-.faction-button {
-    color: #0088cc;
-    font-size: 30px !important;
-    margin-left: 3px;
-    margin-right: 3px;
-}
-
-a {
-    text-decoration: none;
 }

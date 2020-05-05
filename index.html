@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Other CSS -->
+    <link rel="stylesheet" href="styling.css">
+    <link rel="stylesheet" href="fonts/xwing-miniatures.css">
+    <title>Dial Simulator</title>
+</head>
+
+<body onload="myOnloadFunction()">
+    <nav id="main-top-nav-bar" class="navbar">
+        <form class="form-inline">
+            <a class="btn btn-sm"><i onclick="filterDials('Rebel Alliance')"
+                    class="xwing-miniatures-font xwing-miniatures-font-rebel faction-button"></i></a>
+            <a class="btn btn-sm"><i onclick="filterDials('Galactic Empire')"
+                    class="xwing-miniatures-font xwing-miniatures-font-empire faction-button"></i></a>
+            <a class="btn btn-sm"><i onclick="filterDials('Scum And Villainy')"
+                    class="xwing-miniatures-font xwing-miniatures-font-scum faction-button"></i></a>
+            <a class="btn btn-sm"><i onclick="filterDials('Resistance')"
+                    class="xwing-miniatures-font xwing-miniatures-font-rebel-outline faction-button"></i></a>
+            <a class="btn btn-sm"><i onclick="filterDials('First Order')"
+                    class="xwing-miniatures-font xwing-miniatures-font-firstorder faction-button"></i></a>
+            <a class="btn btn-sm"><i onclick="filterDials('Galactic Republic')"
+                    class="xwing-miniatures-font xwing-miniatures-font-republic faction-button"></i></a>
+            <a class="btn btn-sm"><i onclick="filterDials('Separatist Alliance')"
+                    class="xwing-miniatures-font xwing-miniatures-font-separatists faction-button"></i></a>
+            <a class="btn btn-sm" target="_blank" href="https://github.com/norbyyt1300/Dial-Simulator/issues/new"><i
+                    class="xwing-miniatures-font xwing-miniatures-font-token-stress issue-button"></i></a>
+        </form>
+    </nav>
+    <div class="container-fluid">
+        <div id="mainWrapper">
+            <form>
+                <div class="form-row">
+                    <div class="col-auto">
+                        <select id="shipSelectorDropDown" class="form-control-sm">
+                            <option>Select a ship dial!</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <a id="loadShipsButton" class="btn btn-sm btn-primary text-light" onclick="loadDial()">Add</a>
+                    </div>
+                    <div class="col-auto">
+                        <a id="saveToURLButton" class="btn btn-sm btn-info text-light"
+                            onclick="saveSquadToURL()">Save</a>
+                    </div>
+                </div>
+            </form>
+            <div id="dialsContainer"></div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <script src="scripts-add-and-flip-dial.js"></script>
+    <script src="scripts-constants-and-onload.js"></script>
+    <script src="scripts-create-ship-dropdown.js"></script>
+    <script src="scripts-load-and-save-to-url.js"></script>
+    <script src="scripts-navbar.js"></script>
+    <script src="scripts-respond-to-drag.js"></script>
+    <script src="scripts-ship-stats.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

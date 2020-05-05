@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="mobile-web-app-capable" content="yes">
+      <title>Dial Simulator</title>
+      <link rel="stylesheet" type="text/css" href="styling.css">
+      <script src="scripts.js"></script>
+      <link rel="stylesheet" href="fonts/xwing-miniatures.css">
+</head>
+
+<body onload="myOnloadFunction()">
+
+      <div id="main-top-nav-bar">
+            <i onclick="filterDials('Rebel Alliance')"
+                        class="xwing-miniatures-font xwing-miniatures-font-rebel faction-button"></i>
+            <i onclick="filterDials('Galactic Empire')"
+                        class="xwing-miniatures-font xwing-miniatures-font-empire faction-button"></i>
+            <i onclick="filterDials('Scum And Villainy')"
+                        class="xwing-miniatures-font xwing-miniatures-font-scum faction-button"></i>
+            <i onclick="filterDials('Resistance')"
+                        class="xwing-miniatures-font xwing-miniatures-font-rebel-outline faction-button"></i>
+            <i onclick="filterDials('First Order')"
+                        class="xwing-miniatures-font xwing-miniatures-font-firstorder faction-button"></i>
+            <i onclick="filterDials('Galactic Republic')"
+                        class="xwing-miniatures-font xwing-miniatures-font-republic faction-button"></i>
+            <i onclick="filterDials('Separatist Alliance')"
+                        class="xwing-miniatures-font xwing-miniatures-font-separatists faction-button"></i>
+      </div>
+
+      <div id="mainWrapper">
+            <select id="shipSelectorDropDown">
+                  <option>Select a ship dial!</option>
+            </select>
+            <button id="loadShipsButton" onclick="loadDial()">Add Dial</button>
+            <button id="saveToURLButton" class="form-button" onclick="saveSquadToURL()">Save to URL</button>
+            <br>
+            <a id='projectSourceLink' target="_blank"
+                  href="https://github.com/norbyyt1300/Dial-Simulator/issues/new">Submit
+                  Bug/Feature Request</a>
+            <div id="dialsContainer"></div>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</body>
+
+</html>
