@@ -1,3 +1,7 @@
+/* -------------------------------------*/
+/* General styling */
+/* -------------------------------------*/
+
 html, body, #dialsContainer {
     background-color: #202020;
     text-align: center; 
@@ -8,6 +12,11 @@ html, body, #dialsContainer {
 #mainWrapper {
     width: 100%;
 }
+
+/* -------------------------------------*/
+/* Nav bar and controls
+/* -------------------------------------*/
+
 #main-top-nav-bar {
     background-color: #101010;
     padding-top: 0px;
@@ -24,6 +33,11 @@ html, body, #dialsContainer {
 #shipSelectorDropDown {
     width: 200px;
 }
+
+/* -------------------------------------*/
+/* Dial wrapper and label
+/* -------------------------------------*/
+
 .dialWrapperClass {
     margin-top: 10px;            
     width: 340px;
@@ -45,10 +59,16 @@ html, body, #dialsContainer {
     margin-right: 20px;
     color: magenta;
 }
+
 .flip-dial-button {
     float: right;
     font-size: 9px;
 }
+
+/* -------------------------------------*/
+/* Dial maneuvers and selector
+/* -------------------------------------*/
+
 .maneuverSelectorClass {
     width: 40px;
     height: 40px;
@@ -59,24 +79,7 @@ html, body, #dialsContainer {
     z-index: 999;
     background-color:rgba(255,255,0,0.1);
 }
-.shipStatsClass {
-    background-color: #151515;
-    margin-top: 5px;
-    padding: 8px 12px 12px 12px;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;    
-}
-.shipStatClass {
-    margin-left: 7px;
-    font-weight: bold;
-    display: inline-block;
-    width: 38px;
-    text-align: right;
-    background-position: left top;
-    background-size: 23px 23px;
-    background-repeat: no-repeat;
-}
+
 .maneuverColorR {
     color: rgb(227, 40, 55) !important;
 }
@@ -99,6 +102,34 @@ html, body, #dialsContainer {
     color: white;
     font-weight: bold;
 }
+
+/* -------------------------------------*/
+/* Dial stats
+/* -------------------------------------*/
+
+.shipStatsClass {
+    background-color: #151515;
+    margin-top: 5px;
+    padding: 8px 12px 12px 12px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;    
+}
+.shipStatClass {
+    margin-left: 7px;
+    font-weight: bold;
+    display: inline-block;
+    width: 38px;
+    text-align: right;
+    background-position: left top;
+    background-size: 23px 23px;
+    background-repeat: no-repeat;
+}
+
+/* -------------------------------------*/
+/* Dial outline
+/* -------------------------------------*/
+
 .innerCircleDiv {
 	  width: 50px;
       height: 50px;
