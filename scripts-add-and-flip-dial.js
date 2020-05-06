@@ -17,12 +17,136 @@ function loadDial() {
 // ------------------------------------------------------------------
 
 function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOptionValue_shipStatsURL) {
-    // Get the dials container
+    // Get the dials container element that holds all the dials
     var dialsContainerElement = document.getElementById("dialsContainer");
-    // Add a new dial wrapper as a new element, and set its class
+    // Create a new wrapper element for this new single dial, set its class, and add it to its parent
     var newDialWrapperElement = document.createElement("div");
     newDialWrapperElement.setAttribute('class', "dialWrapperClass");
-    // Add the label element, and set its class
+    dialsContainerElement.appendChild(newDialWrapperElement);
+    // Create the maneuver selector element, set its class, and add it to its parent
+    addManeuverSelectorElement(newDialWrapperElement);
+    // If using a mouse (on a desktop/laptop), float the dials left so they arrange horizontally
+    if (!useTouchDragInsteadOfMouseDrag) {
+        newDialWrapperElement.style.cssFloat = "left";
+        newDialWrapperElement.style.marginRight = "10px";
+    }
+    // Increment the ship counter
+    shipCounter++;
+    // Create the dial label element, set its class, and add it to its parent
+    newDialWrapperElement.appendChild(createDialLabelElement(shipCounter, selectedOptionText_shipName));
+    // Create the dial maneuvers wrapper element, set its class, and add it to its parent
+    console.log("Add the ship dial maneuvers");
+    var maneuversWrapperElement = document.createElement("div");
+    maneuversWrapperElement.setAttribute('class', "dialManeuversWrapperClass");
+    newDialWrapperElement.appendChild(maneuversWrapperElement);
+    // Get the ship stats
+    console.log("Getting ship dial maneuvers and stats from URL:", selectedOptionValue_shipStatsURL);
+    $.get(selectedOptionValue_shipStatsURL, function (data, status) {
+        var parsedShipJSON = JSON.parse(data);
+        // Update the maneuvers wrapper element class with the ship name
+        console.log("XWS Ship Name: ", parsedShipJSON.xws);
+        maneuversWrapperElement.setAttribute('class', ("dialManeuversWrapperClass " + parsedShipJSON.xws));
+        // Get the dial maneuvers and add each as an element to the maneuvers wrapper element
+        createHTMLElementsForEachManeuver(parsedShipJSON.dial, maneuversWrapperElement);
+        // Arrange the dial maneuver HTML elements in a circle within the maneuvers wrapper element
+        arrangeDialManeuverHTMLElementsInACircle(maneuversWrapperElement);
+        // Add the outer and inner circles for the dial to the maneuvers wrapper element
+        addInnerAndOuterDialCircle(maneuversWrapperElement);
+        // Add the ship stats
+        console.log("Add the ship stats using the following JSON:", parsedShipJSON.stats);
+        var newShipStatsElement = document.createElement("div");
+        newShipStatsElement.innerHTML = createHTMlForShipStatsJSON(parsedShipJSON.stats);
+        newShipStatsElement.setAttribute('class', "shipStatsClass");
+        newDialWrapperElement.appendChild(newShipStatsElement);
+    });
+}
+
+// ------------------------------------------------------------------
+// Add the maneuver selector element
+// ------------------------------------------------------------------
+
+function addManeuverSelectorElement(newDialWrapperElement) {
+    var maneuverSelectorElement = document.createElement("div");
+    maneuverSelectorElement.setAttribute('class', "maneuverSelectorClass");
+    newDialWrapperElement.appendChild(maneuverSelectorElement);
+    // Make the maneuver selector element draggable for both touch and mouse
+    if (useTouchDragInsteadOfMouseDrag) {
+        addTouchDraggability(maneuverSelectorElement);
+    } else {
+        addMouseDraggability(maneuverSelectorElement);
+    }
+}
+
+// ------------------------------------------------------------------
+// Create HTML elements for each maneuver on the dial
+// ------------------------------------------------------------------
+
+function createHTMLElementsForEachManeuver(maneuversArray, maneuversWrapperElement) {
+    console.log("Ship dial maneuvers JSON: ", maneuversArray);
+    var previousManeuverSpeed = maneuversArray[0].substring(0, 1);
+    for (var i = 0; i < maneuversArray.length; i++) {
+        var maneuverString = maneuversArray[i];
+        var maneuverSpeed = maneuverString.substring(0, 1);
+        var maneuverDirection = maneuverString.substring(1, 2);
+        var maneuverColor = maneuverString.substring(2);
+        console.log("Maneuver speed, direction, and color: ", maneuverSpeed + "," + maneuverDirection + "," + maneuverColor);
+        var newDialManeuverElement = document.createElement("div");
+        /*
+        // If this maneuver speed is different from the previous maneuver's speed, add a line break
+        if (previousManeuverSpeed != maneuverSpeed) {
+            //newDialWrapperElement.appendChild(document.createElement("br"));
+        }
+        */
+        previousManeuverSpeed = maneuverSpeed;
+        newDialManeuverElement.innerHTML = "<i class='dialManeuverSymbolClass maneuverColor" + maneuverColor + " xwing-miniatures-font " + getManeuverDirectionSymbol(maneuverDirection) + "'></i><div class='dialManeuverSpeedClass'>" + maneuverSpeed + "</div>";
+        newDialManeuverElement.setAttribute('class', "dialManeuverElementWrapperClass");
+        maneuversWrapperElement.appendChild(newDialManeuverElement);
+    }
+}
+
+// ------------------------------------------------------------------
+// Arrange dial maneuver HTML elements in a circle
+// ------------------------------------------------------------------
+
+function arrangeDialManeuverHTMLElementsInACircle(maneuversWrapperElement) {
+    // Courtesy of https://codepen.io/dbpas/pen/LGudb
+    var type = 1, //circle type - 1 whole, 0.5 half, 0.25 quarter
+        radius = '7em', //distance from center
+        start = -90, //shift start from 0
+        $elements = $(maneuversWrapperElement).children(),
+        numberOfElements = (type === 1) ? $elements.length : $elements.length - 1, //adj for even distro of elements when not full circle
+        slice = 360 * type / numberOfElements;
+    $elements.each(function (i) {
+        var $self = $(this),
+            rotate = slice * i + start,
+            rotateReverse = rotate * -1;
+        $self.css({
+            //'transform': 'rotate(' + rotate + 'deg) translate(' + radius + ') rotate(' + rotateReverse + 'deg)'
+            'transform': 'rotate(' + rotate + 'deg) translate(' + radius + ') rotate(90deg)',
+            'top': maneuversWrapperElement.offsetTop + 125,
+            'left': maneuversWrapperElement.offsetLeft + 150
+        });
+    });
+}
+
+// ------------------------------------------------------------------
+// Add inner and outer circles for the dial
+// ------------------------------------------------------------------
+
+function addInnerAndOuterDialCircle(maneuversWrapperElement) {
+    var dialInnerCircle = document.createElement("div");
+    var dialOuterCircle = document.createElement("div");
+    dialInnerCircle.setAttribute('class', "innerCircleDiv");
+    dialOuterCircle.setAttribute('class', "outerCircleDiv");
+    maneuversWrapperElement.appendChild(dialInnerCircle);
+    maneuversWrapperElement.appendChild(dialOuterCircle);
+}
+
+// ------------------------------------------------------------------
+// Create an HTML element for the dial label
+// ------------------------------------------------------------------
+
+function createDialLabelElement(shipCounter, selectedOptionText_shipName) {
     var newDialLabelElement = document.createElement("div");
     newDialLabelElement.setAttribute('class', "dialLabelClass");
     // Set the label text
@@ -32,99 +156,7 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
         console.log("Label clicked: Position: ", this.getBoundingClientRect().top);
         this.scrollIntoView(true);
     });
-    // Increment the ship counter
-    shipCounter++;
-    var shipStatsURL = selectedOptionValue_shipStatsURL;
-    console.log("Ship stats URL:");
-    console.log(shipStatsURL);
-    // Add the draggable element
-    var maneuverSelectorElement = document.createElement("div");
-    // Set the class
-    maneuverSelectorElement.setAttribute('class', "maneuverSelectorClass");
-    // Add all these new elements to their parent element
-    dialsContainerElement.appendChild(newDialWrapperElement);
-    newDialWrapperElement.appendChild(maneuverSelectorElement);
-    newDialWrapperElement.appendChild(newDialLabelElement);
-    // Shift the selector element
-    maneuverSelectorElement.style.left = parseInt(maneuverSelectorElement.style.left.replace("px", ""), 10) + 308 + "px";
-    // Make the maneuver selector element draggable:
-    if (useTouchDragInsteadOfMouseDrag) {
-        addTouchDraggability(maneuverSelectorElement);
-    } else {
-        // Otherwise, add draggability in response to mouse events
-        addMouseDraggability(maneuverSelectorElement);
-        // Also add inline styling to fit more dials on one page
-        newDialWrapperElement.style.cssFloat = "left";
-        newDialWrapperElement.style.marginRight = "10px";
-    }
-    // Add the dial
-    console.log("Add the ship dial");
-    var maneuversWrapperElement = document.createElement("div");
-    maneuversWrapperElement.setAttribute('class', ("dialManeuversWrapperClass"));
-    // Add this element to the parent
-    newDialWrapperElement.appendChild(maneuversWrapperElement);
-    $.get(shipStatsURL, function (data, status) {
-        var parsedShipJSON = JSON.parse(data);
-        var shipStatsJSON = parsedShipJSON.stats;
-        console.log("Ship JSON: ", shipStatsJSON);
-        console.log("Ship dial JSON: ", parsedShipJSON.dial);
-        // Get the ship name
-        var XWSShipName = parsedShipJSON.xws;
-        console.log("XWS Ship Name: ", XWSShipName);
-        // Update the parent class with the ship name
-        maneuversWrapperElement.setAttribute('class', ("dialManeuversWrapperClass " + XWSShipName));
-        //var maneuversArray = parsedShipJSON.dial.reverse();
-        var maneuversArray = parsedShipJSON.dial;
-        var previousManeuverSpeed = maneuversArray[0].substring(0, 1);
-        for (var i = 0; i < maneuversArray.length; i++) {
-            var maneuverString = maneuversArray[i];
-            var maneuverSpeed = maneuverString.substring(0, 1);
-            var maneuverDirection = maneuverString.substring(1, 2);
-            var maneuverColor = maneuverString.substring(2);
-            console.log("Speed, direction, and color: ", maneuverSpeed + "," + maneuverDirection + "," + maneuverColor);
-            var newDialManeuverElement = document.createElement("div");
-            // If this maneuver speed is different from the previous maneuver's speed, add a line break
-            if (previousManeuverSpeed != maneuverSpeed) {
-                //newDialWrapperElement.appendChild(document.createElement("br"));
-            }
-            previousManeuverSpeed = maneuverSpeed;
-            newDialManeuverElement.innerHTML = "<i class='dialManeuverSymbolClass maneuverColor" + maneuverColor + " xwing-miniatures-font " + getManeuverDirectionSymbol(maneuverDirection) + "'></i><div class='dialManeuverSpeedClass'>" + maneuverSpeed + "</div>";
-            newDialManeuverElement.setAttribute('class', "dialManeuverElementWrapperClass");
-            maneuversWrapperElement.appendChild(newDialManeuverElement);
-        }
-        // Arrange these in a circle
-        // Courtesy of https://codepen.io/dbpas/pen/LGudb
-        var type = 1, //circle type - 1 whole, 0.5 half, 0.25 quarter
-            radius = '7em', //distance from center
-            start = -90, //shift start from 0
-            $elements = $(maneuversWrapperElement).children(),
-            numberOfElements = (type === 1) ? $elements.length : $elements.length - 1, //adj for even distro of elements when not full circle
-            slice = 360 * type / numberOfElements;
-        $elements.each(function (i) {
-            var $self = $(this),
-                rotate = slice * i + start,
-                rotateReverse = rotate * -1;
-            $self.css({
-                //'transform': 'rotate(' + rotate + 'deg) translate(' + radius + ') rotate(' + rotateReverse + 'deg)'
-                'transform': 'rotate(' + rotate + 'deg) translate(' + radius + ') rotate(90deg)',
-                'top': maneuversWrapperElement.offsetTop + 125,
-                'left': maneuversWrapperElement.offsetLeft + 150
-            });
-        });
-        // Add the outer and inner circles for the dial
-        var dialInnerCircle = document.createElement("div");
-        var dialOuterCircle = document.createElement("div");
-        dialInnerCircle.setAttribute('class', "innerCircleDiv");
-        dialOuterCircle.setAttribute('class', "outerCircleDiv");
-        maneuversWrapperElement.appendChild(dialInnerCircle);
-        maneuversWrapperElement.appendChild(dialOuterCircle);
-        // Add the ship stats
-        console.log("Add the ship stats");
-        var newShipStatsElement = document.createElement("div");
-        newShipStatsElement.innerHTML = createHTMlForShipStatsJSON(shipStatsJSON);
-        newShipStatsElement.setAttribute('class', "shipStatsClass");
-        newDialWrapperElement.appendChild(newShipStatsElement);
-    });
+    return newDialLabelElement;
 }
 
 // ------------------------------------------------------------------
@@ -195,7 +227,7 @@ function getManeuverDirectionSymbol(maneuverDirectionCharacter) {
 }
 
 // ------------------------------------------------------------------
-// Function that hides a dial selector
+// Function that hides a dial selector and shades the dial
 // ------------------------------------------------------------------
 
 function flipDial(clickedElement) {
@@ -204,12 +236,15 @@ function flipDial(clickedElement) {
     // Get the element(s) you'd like to hide
     var selectorElement = dialWrapperElement.getElementsByClassName('maneuverSelectorClass')[0];
     var dialManeuversWrapperElement = dialWrapperElement.getElementsByClassName('dialManeuversWrapperClass')[0];
+    var outerCircleDiv = dialWrapperElement.getElementsByClassName('outerCircleDiv')[0];
     // Toggle visibility
     if (selectorElement.style.visibility == "hidden") {
+        // Revealed dial
         selectorElement.style.visibility = "visible";
-        dialManeuversWrapperElement.style.opacity = "1";
+        outerCircleDiv.style.background = "transparent";
     } else {
+        // Hidden dial
         selectorElement.style.visibility = "hidden";
-        dialManeuversWrapperElement.style.opacity = "0.4";
+        outerCircleDiv.style.background = "repeating-linear-gradient(45deg, gray, gray 10px, darkgray 10px, darkgray 20px)";
     }
 }

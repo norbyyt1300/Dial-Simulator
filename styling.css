@@ -148,5 +148,6 @@ html, body, #dialsContainer {
       background: transparent;
 	  border: 2px solid #202020;
 	  transform: translate(20px, -40px);
-	  z-index: 10;
+      z-index: 10;
+      opacity: 0.7;
 }

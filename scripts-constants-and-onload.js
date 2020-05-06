@@ -2,7 +2,7 @@
 // Constants and global variables
 // ------------------------------------------------------------------
 
-var shipCounter = 1;
+var shipCounter = 0;
 var useTouchDragInsteadOfMouseDrag = true;
 var XWSShipStatisticsURLsArray = null;
 // An array containing the ship names and URLs and statistics
