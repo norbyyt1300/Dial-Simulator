@@ -150,13 +150,23 @@ function createDialLabelElement(shipCounter, selectedOptionText_shipName) {
     var newDialLabelElement = document.createElement("div");
     newDialLabelElement.setAttribute('class', "dialLabelClass");
     // Set the label text
-    newDialLabelElement.innerHTML = "<span class='shipNumberClass'>" + shipCounter + "</span>" + selectedOptionText_shipName.split(" - ")[1] + "<a onclick='flipDial(this)' class='btn btn-dark btn-sm flip-dial-button'>Flip</a>";
+    newDialLabelElement.innerHTML = "<span class='shipNumberClass' onclick='cycleLabelColor(this)' >" + shipCounter + "</span>" + selectedOptionText_shipName.split(" - ")[1] + "<a onclick='flipDial(this)' class='btn btn-dark btn-sm flip-dial-button'>Flip</a>";
     // Allow scrolling to this dial when the title is clicked
     newDialLabelElement.addEventListener("click", function () {
         console.log("Label clicked: Position: ", this.getBoundingClientRect().top);
         this.scrollIntoView(true);
     });
     return newDialLabelElement;
+}
+
+const LABEL_COLORS = ["red", "green", "blue", "orange", "black", "magenta", "gold", "brown"];
+function cycleLabelColor(element) {
+    var index = LABEL_COLORS.indexOf(element.parentElement.style.backgroundColor);
+    index = index + 1;
+    if (index >= LABEL_COLORS.length) {
+        index = 0;
+    }
+    element.parentElement.style.backgroundColor = LABEL_COLORS[index];
 }
 
 // ------------------------------------------------------------------

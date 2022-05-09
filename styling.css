@@ -57,7 +57,10 @@ html, body, #dialsContainer {
 .shipNumberClass {
     font-weight:bold;
     margin-right: 20px;
-    color: magenta;
+    color: white;
+    background-color: rgb(52, 58, 64);
+    padding: 4px 8px;
+    border-radius: 3.2px;
 }
 
 .flip-dial-button {
