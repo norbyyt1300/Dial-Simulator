@@ -23,6 +23,11 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
     var newDialWrapperElement = document.createElement("div");
     newDialWrapperElement.setAttribute('class', "dialWrapperClass");
     dialsContainerElement.appendChild(newDialWrapperElement);
+    
+    
+    /*
+    // No longer needed; now allows directly selecting maneuver
+    
     // Create the maneuver selector element, set its class, and add it to its parent
     addManeuverSelectorElement(newDialWrapperElement);
     // If using a mouse (on a desktop/laptop), float the dials left so they arrange horizontally
@@ -30,6 +35,15 @@ function loadDialUsingShipNameAndURL(selectedOptionText_shipName, selectedOption
         newDialWrapperElement.style.cssFloat = "left";
         newDialWrapperElement.style.marginRight = "10px";
     }
+
+
+
+    */
+
+
+
+
+
     // Increment the ship counter
     shipCounter++;
     // Create the dial label element, set its class, and add it to its parent
@@ -244,17 +258,51 @@ function flipDial(clickedElement) {
     // Get the parent element
     var dialWrapperElement = clickedElement.parentElement.parentElement;
     // Get the element(s) you'd like to hide
-    var selectorElement = dialWrapperElement.getElementsByClassName('maneuverSelectorClass')[0];
     var dialManeuversWrapperElement = dialWrapperElement.getElementsByClassName('dialManeuversWrapperClass')[0];
     var outerCircleDiv = dialWrapperElement.getElementsByClassName('outerCircleDiv')[0];
-    // Toggle visibility
-    if (selectorElement.style.visibility == "hidden") {
+    
+    // Toggle visibility of circle
+    if (outerCircleDiv.style.background != "transparent") {
+        // Revealed dial
+        outerCircleDiv.style.background = "transparent";
+        outerCircleDiv.style.zIndex = "9";
+    } else {
+        // Hidden dial
+        outerCircleDiv.style.background = "repeating-linear-gradient(45deg, gray, gray 10px, darkgray 10px, darkgray 20px)";
+        outerCircleDiv.style.zIndex = "11";
+    }
+
+    /*
+    // Toggle visibility of selector; do this SEPARATELY
+    var selectorElement = dialWrapperElement.getElementsByClassName('maneuverSelectorClass')[0];
+    if (outerCircleDiv.style.background != "transparent") {
         // Revealed dial
         selectorElement.style.visibility = "visible";
-        outerCircleDiv.style.background = "transparent";
     } else {
         // Hidden dial
         selectorElement.style.visibility = "hidden";
-        outerCircleDiv.style.background = "repeating-linear-gradient(45deg, gray, gray 10px, darkgray 10px, darkgray 20px)";
     }
+    */
 }
+
+
+
+
+// ------------------------------------------------------------------
+// Highlights selected maneuver
+// ------------------------------------------------------------------
+
+
+document.addEventListener('click', function (e) {
+
+	if (e.target.matches('.dialManeuverElementWrapperClass')) {
+		
+		var maneuverElements = e.target.parentNode.getElementsByClassName("dialManeuverElementWrapperClass");
+		for (var i = 0; i < maneuverElements.length; i++) {
+		   maneuverElements[i].style.outline = "none";
+		}
+	
+        e.target.style.outline = "solid yellow 2px";
+	
+	}
+});

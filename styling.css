@@ -8,6 +8,9 @@ html, body, #dialsContainer {
     margin: 0px;
     padding: 0px;
     overscroll-behavior-y: contain;
+    -webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* IE 10 and IE 11 */
+	user-select: none; /* Standard syntax */
 }
 #mainWrapper {
     width: 100%;
@@ -96,14 +99,19 @@ html, body, #dialsContainer {
     height: 19em;
 }
 .dialManeuverElementWrapperClass {
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
+    /* border-left: 1px solid gray; */
+    /* border-right: 1px solid gray; */
     width: 30px;
     position: absolute;
+	z-index: 10;
+	-webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* IE 10 and IE 11 */
+	user-select: none; /* Standard syntax */
 }
 .dialManeuverSpeedClass {
     color: white;
     font-weight: bold;
+	font-size: 20px;
 }
 
 /* -------------------------------------*/
@@ -141,16 +149,19 @@ html, body, #dialsContainer {
       border-radius: 25px;
       background: #202020;
 	  transform: translate(141px, 135px);
+	  box-shadow: 0px 0px 1px #303030;
 }
 .outerCircleDiv {
-	  width: 290px;
-      height: 290px;
+	  width: 294px;
+      height: 294px;
       -webkit-border-radius: 145px;
       -moz-border-radius: 145px;
       border-radius: 145px;
       background: transparent;
 	  border: 2px solid #202020;
 	  transform: translate(20px, -40px);
-      z-index: 10;
-      opacity: 0.7;
+      z-index: 9;
+      opacity: 1;
+	  box-shadow: 0px 0px 1px #303030;
+      position: absolute;
 }
